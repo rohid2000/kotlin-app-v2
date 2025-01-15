@@ -24,13 +24,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         lifecycleScope.launch {
-            val users = fetchUsers()
-            if (users != null) {
-                // Process the list of users
-                Log.d("MainActivity", "Users: $users")
-            } else {
-                // Handle error
-                Log.e("MainActivity", "Failed to fetch users")
+            try {
+                val users = fetchUsers()
+                if (users != null) {
+                    // Process the list of users
+                    Log.d("MainActivity", "Users: $users")
+                } else {
+                    // Handle error
+                    Log.e("MainActivity", "Failed to fetch users")
+                }
+            } catch (exception: Exception) {
+                Log.d("MainActivity", "FAILED")
             }
         }
         enableEdgeToEdge()
