@@ -1,5 +1,6 @@
 package com.example.kotlin_app_v2
 
+import android.content.ClipData.Item
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -61,15 +62,25 @@ fun HomeScreen() {
         )
 
         Button(onClick = { /*TODO: Implement loan application navigation*/ },
-            modifier = Modifier.fillMaxWidth(0.8f).padding(bottom = 16.dp)
+            modifier = Modifier.fillMaxWidth(0.8f)
         ) {
-            Text("Loan a Vehicle")
+            Text("Begin Date")
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         Button(onClick = { /*TODO: Implement loan status navigation*/ },
             modifier = Modifier.fillMaxWidth(0.8f)
         ) {
-            Text("Loan Vehicle Status")
+            Text("End Date")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(onClick = { /*TODO: Implement loan status navigation*/ },
+            modifier = Modifier.fillMaxWidth(0.8f)
+        ) {
+            Text("Filter Options")
         }
     }
 }
