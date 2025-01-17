@@ -1,31 +1,35 @@
 package com.example.kotlin_app_v2.api
 
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.serialization.gson.*
 
 class ApiService {
-    private val url = "https://localhost:8080";
+    private val url = "http://localhost:8080";
 
-    fun SendPostRequest(endpoint: String, jsonBody: String): String? {
-        val client = OkHttpClient()
-
-        val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
-        val requestBody = jsonBody.toRequestBody(mediaType)
-
-        val request = Request.Builder()
-            .url("$url/$endpoint")
-            .post(requestBody)
-            .build()
-
-        client.newCall(request).execute().use { response ->
-            return if (response.isSuccessful) {
-                response.body?.string()
-            } else {
-                "Error: ${response.code}"
+    suspend fun SendPostRequest(endpoint: String, jsonBody: String): String? {
+        val client = HttpClient {
+            install(ContentNegotiation) {
+                gson() // or use kotlinx.serialization if preferred
             }
+        }
+
+        return try {
+            val finalUrl = "$url/$endpoint"
+            val response: HttpResponse = client.post(finalUrl) {
+                contentType(ContentType.Application.Json)
+                setBody(jsonBody)
+            }
+            response.body<String>()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        } finally {
+            client.close()
         }
     }
 }

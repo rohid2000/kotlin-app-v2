@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kotlin_app_v2.api.ApiService
 import com.example.kotlin_app_v2.ui.theme.Kotlinappv2Theme
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +32,11 @@ class MainActivity : ComponentActivity() {
         }
         """.trimIndent()
 
-        val response = apiService.SendPostRequest("user/add", jsonBody)
+        runBlocking {
+            val response = apiService.SendPostRequest("user/add", jsonBody)
+            println(response)
+        }
+
 
         enableEdgeToEdge()
         setContent {
