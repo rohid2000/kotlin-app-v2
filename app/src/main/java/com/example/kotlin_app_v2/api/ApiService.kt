@@ -1,5 +1,6 @@
 package com.example.kotlin_app_v2.api
 
+import com.example.kotlin_app_v2.models.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.http.GET
