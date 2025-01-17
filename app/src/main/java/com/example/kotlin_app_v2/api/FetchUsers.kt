@@ -1,23 +1,7 @@
 package com.example.kotlin_app_v2.api
 
-import com.example.kotlin_app_v2.models.User
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import retrofit2.awaitResponse
+class UserFetcher {
+    fun fetchUsers() {
 
-suspend fun fetchUsers(): List<User>? {
-    return withContext(Dispatchers.IO) {
-        try {
-            val response = RetrofitClient.apiService.getUsers().awaitResponse()
-            if (response.isSuccessful) {
-                response.body()
-            } else {
-                // Handle error
-                null
-            }
-        } catch (e: Exception) {
-            // Handle exception
-            null
-        }
     }
 }

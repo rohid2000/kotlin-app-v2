@@ -1,7 +1,6 @@
 package com.example.kotlin_app_v2
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -14,29 +13,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.lifecycleScope
-import com.example.kotlin_app_v2.api.fetchUsers
+import com.example.kotlin_app_v2.api.ApiService
 import com.example.kotlin_app_v2.ui.theme.Kotlinappv2Theme
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        lifecycleScope.launch {
-            try {
-                val users = fetchUsers()
-                if (users != null) {
-                    // Process the list of users
-                    Log.d("MainActivity", "Users: $users")
-                } else {
-                    // Handle error
-                    Log.e("MainActivity", "Failed to fetch users")
-                }
-            } catch (exception: Exception) {
-                Log.d("MainActivity", "FAILED")
-            }
+        val apiService = ApiService()
+
+        val jsonBody = """
+        {
+            "firstName": "Rohid",
+            "lastName": "",
+            "email": "rohid@mail.nl",
+            "phoneNumber": "+31629810798"
         }
+        """.trimIndent()
+
+        val response = apiService.SendPostRequest("user/add", jsonBody)
+
         enableEdgeToEdge()
         setContent {
             Kotlinappv2Theme {
