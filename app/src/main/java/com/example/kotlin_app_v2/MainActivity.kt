@@ -49,24 +49,6 @@ fun HomeScreen() {
         )
 
         Button(
-            onClick = { /* Handle Begin Date Selector */ },
-            modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .padding(bottom = 8.dp)
-        ) {
-            Text(text = "Begin Date Selector")
-        }
-
-        Button(
-            onClick = { /* Handle End Date Selector */ },
-            modifier = Modifier
-                .fillMaxWidth(0.8f)
-        ) {
-            Text(text = "End Date Selector")
-        }
-
-        // Button to fetch users
-        Button(
             onClick = {
                 getAllUsers()
             },
