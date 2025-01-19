@@ -1,6 +1,5 @@
 package com.example.kotlin_app_v2
 
-import android.content.ClipData.Item
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,34 +9,15 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.kotlin_app_v2.api.ApiService
+import com.example.kotlin_app_v2.api.getAllUsers
 import com.example.kotlin_app_v2.ui.theme.Kotlinappv2Theme
-import kotlinx.coroutines.runBlocking
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val apiService = ApiService()
-
-        val jsonBody = """
-        {
-            "firstName": "Rohid",
-            "lastName": "",
-            "email": "rohid@mail.nl",
-            "phoneNumber": "+31629810798"
-        }
-        """.trimIndent()
-
-        runBlocking {
-            val response = apiService.SendPostRequest("user/add", jsonBody)
-            println(response)
-        }
-
 
         enableEdgeToEdge()
         setContent {
@@ -56,36 +36,44 @@ fun HomeScreen() {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top // Changed to Top
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Title
         Text(
             text = "Loan Vehicle App",
-            fontSize = 32.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 24.dp)
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            textAlign = TextAlign.Center
         )
 
-        Button(onClick = { /*TODO: Implement loan application navigation*/ },
-            modifier = Modifier.fillMaxWidth(0.8f)
+        Button(
+            onClick = { /* Handle Begin Date Selector */ },
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .padding(bottom = 8.dp)
         ) {
-            Text("Begin Date")
+            Text(text = "Begin Date Selector")
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(onClick = { /*TODO: Implement loan status navigation*/ },
-            modifier = Modifier.fillMaxWidth(0.8f)
+        Button(
+            onClick = { /* Handle End Date Selector */ },
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
         ) {
-            Text("End Date")
+            Text(text = "End Date Selector")
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(onClick = { /*TODO: Implement loan status navigation*/ },
-            modifier = Modifier.fillMaxWidth(0.8f)
+        // Button to fetch users
+        Button(
+            onClick = {
+                getAllUsers()
+            },
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
         ) {
-            Text("Filter Options")
+            Text(text = "Get Users")
         }
     }
 }
